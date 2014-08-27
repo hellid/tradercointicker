@@ -76,7 +76,7 @@ class IRCBot
 		response = Net::HTTP.get_response(URI(url))
 		begin 
 			data = JSON.parse(response.read_body)
-			latest_trade = data["ticker"][0]
+			latest_trade = data["ticker"]
 			#quantity = latest_trade["quantity"].slice(0..(latest_trade["quantity"].index('.')+2))
 			price = latest_trade["lastprice"]
 			buy = lastest_trade["lastsell"]
@@ -97,7 +97,7 @@ class IRCBot
 		response = Net::HTTP.get_response(URI(url))
 		begin 
 			data = JSON.parse(response.read_body)
-			latest_trade = data["ticker"][0]
+			latest_trade = data["ticker"]
 			#quantity = latest_trade["quantity"].slice(0..(latest_trade["quantity"].index('.')+2))
 			price = latest_trade["lastprice"]
 			buy = lastest_trade["lastsell"]
@@ -148,6 +148,7 @@ class IRCBot
 
 	def show_help
 		say_to_channel '!price for last price'
+		say_to_channel '!price usd for last price on USD'
 		say_to_channel '!buy for last buy price'
 		say_to_channel '!sell for last sell price'
 		say_to_channel '!info for info about this bot'
@@ -163,14 +164,14 @@ class IRCBot
 		response = Net::HTTP.get_response(URI(url))
 		begin 
 			data = JSON.parse(response.read_body)
-			buy_orders = data["ticker"][0]
-			buy = buy_orders["sell"]
+			buy_orders = data["ticker"]["sell"]
+			#buy = buy_orders["sell"]
 			#current_wall_str = ""
 			#(0..2).each do |x|
 			#	current_wall_str << "\x02BTC " + buy_orders[x]["total"] + "\x02 @ \x02" + buy_orders[x]["price"].slice(buy_orders[x]["price"].index(/[1-9]/)..-1) + "\x02, "
-			end
+			#end
 
-			say_to_channel "Current Buy Price: #{buy}"
+			say_to_channel "Current Buy Price: #{buy_orders}"
 		rescue JSON::ParserError
 			say_to_channel "Much error, such 502 Bad Gateway (try again in a minute, Shibe is many sorry)"
 		end
@@ -181,14 +182,14 @@ class IRCBot
 		response = Net::HTTP.get_response(URI(url))
 		begin 
 			data = JSON.parse(response.read_body)
-			sell_orders = data["ticker"][0]
-			sell = sell_orders["buy"]
+			sell_orders = data["ticker"]["buy"]
+			#sell = sell_orders["buy"]
 			#current_wall_str = ""
 			#(0..2).each do |x|
 			#	current_wall_str << "\x02BTC " + sell_orders[x]["total"] + "\x02 @ \x02" + sell_orders[x]["price"].slice(sell_orders[x]["price"].index(/[1-9]/)..-1) + "\x02, "
-			end
+			#end
 
-			say_to_channel "Current Sell Price: #{sell}"
+			say_to_channel "Current Sell Price: #{sell_orders}"
 		rescue JSON::ParserError
 			say_to_channel "Much error, such 502 Bad Gateway (try again in a minute, Shibe is many sorry)"
 		end
@@ -205,7 +206,6 @@ class IRCBot
 			end
 		end
 	end
-end
 
 bot = IRCBot.new('TraderCoinInfo', 'irc.freenode.net', 6667, 'tradercoin')
 bot.run
