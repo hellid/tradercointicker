@@ -78,9 +78,9 @@ class IRCBot
 			data = JSON.parse(response.read_body)
 			latest_trade = data["ticker"]
 			#quantity = latest_trade["quantity"].slice(0..(latest_trade["quantity"].index('.')+2))
-			price = latest_trade["lastprice"]
-			buy = lastest_trade["lastsell"]
-			sell = lastest_trade["lastbuy"]
+			price = ["lastprice"]
+			buy = ["lastsell"]
+			sell = ["lastbuy"]
 			#time = latest_trade["time"].slice(latest_trade["time"].index(" ")+1..-1)
 
 			say_to_channel "Last price (BTC) : \x02#{price}\x02, Last Buy : \x02#{buy}\x02, Last Sell : \x02#{sell}\x02."
@@ -99,9 +99,9 @@ class IRCBot
 			data = JSON.parse(response.read_body)
 			latest_trade = data["ticker"]
 			#quantity = latest_trade["quantity"].slice(0..(latest_trade["quantity"].index('.')+2))
-			price = latest_trade["lastprice"]
-			buy = lastest_trade["lastsell"]
-			sell = lastest_trade["lastbuy"]
+			price = ["lastprice"]
+			buy = ["lastsell"]
+			sell = ["lastbuy"]
 			#time = latest_trade["time"].slice(latest_trade["time"].index(" ")+1..-1)
 
 			say_to_channel "Last price (USD) : \x02#{price}\x02, Last Buy : \x02#{buy}\x02, Last Sell : \x02#{sell}\x02."
